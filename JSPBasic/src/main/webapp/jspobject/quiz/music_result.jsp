@@ -12,13 +12,3 @@
 		response.sendRedirect("https://www.youtube.com/watch?v=Thjagcdo4Bw");
 	}
 %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-
-</body>
-</html>

@@ -1,6 +1,6 @@
-<%@page import="com.ict.domain.UserVO"%>
+<%@page import="kr.co.ict.domain.UserVO"%>
 <%@page import="java.util.List"%>
-<%@page import="com.ict.domain.UserDAO"%>
+<%@page import="kr.co.ict.domain.UserDAO"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.DriverManager"%>

@@ -1,4 +1,4 @@
-package com.ict.domain;
+package kr.co.ict.domain;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

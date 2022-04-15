@@ -1,5 +1,5 @@
-<%@page import="com.ict.domain.UserVO"%>
-<%@page import="com.ict.domain.UserDAO"%>
+<%@page import="kr.co.ict.domain.UserVO"%>
+<%@page import="kr.co.ict.domain.UserDAO"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.Connection"%>

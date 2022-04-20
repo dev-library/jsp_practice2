@@ -47,7 +47,7 @@ public class BoardDAO {
 		try {
 			con = ds.getConnection();
 			// 쿼리문 저장
-			String sql = "SELECT * FROM boardTbl";
+			String sql = "SELECT * FROM boardTbl ORDER BY board_num DESC";
 			// PreparedStatement에 쿼리문 입력
 			pstmt = con.prepareStatement(sql);
 			
@@ -128,4 +128,66 @@ public class BoardDAO {
 		}
 		return board;
 	}
+	
+	// 비 SELECT구문은 void리턴
+	public void boardInsert(String title, String content, String writer) {
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			con = ds.getConnection();
+			
+			String sql = "INSERT INTO boardTbl (title, content, writer) VALUES (?, ?, ?)";
+			pstmt = con.prepareStatement(sql);
+			// ? 채우기
+			pstmt.setString(1, title);
+			pstmt.setString(2, content);
+			pstmt.setString(3, writer);
+			
+			pstmt.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				//.close()		
+				con.close();
+				pstmt.close();
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}	
+	}// 글쓰기로직 마무리
+	
+	// 삭제로직
+	public void boardDelete(int boardNum) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			con = ds.getConnection();
+			String sql = "DELETE FROM boardTbl WHERE board_num=?";
+			pstmt = con.prepareStatement(sql);
+			// ? 채우기
+			pstmt.setInt(1, boardNum);
+
+			pstmt.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+				pstmt.close();
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	
 }
+
+
+
+
+

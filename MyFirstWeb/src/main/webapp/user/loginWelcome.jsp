@@ -27,5 +27,13 @@
 	<a href="userLogout.jsp">로그아웃</a>
 	<a href="userDelete.jsp">회원탈퇴</a>
 	<a href="userUpdateForm.jsp">정보수정</a>
+	<!-- 게시판으로 이동할 수 있는 링크 추가 -->
+	<a href="http://localhost:8181/MyFirstWeb/boardList.do">게시판 조회하기</a>
+	
 </body>
 </html>
+
+
+
+
+

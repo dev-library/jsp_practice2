@@ -35,7 +35,7 @@ public class GetBoardList extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 여기서 DAO를 활용해 데이터를 얻어온 다음 포워딩으로 getBoardList.jsp로 전송합니다.
 		BoardDAO dao = BoardDAO.getInstance();
-		List<BoardVO> boardList = dao.getBoardList();
+		List<BoardVO> boardList = dao.getBoardList(1);
 		System.out.println("데이터 받아오는지 확인 : " + boardList);
 		
 		// 포워딩 위치로 얻어온 데이터 보내기.(ServletCustom을 참고하세요.)

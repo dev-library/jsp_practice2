@@ -36,7 +36,7 @@ public class BoardDAO {
 	// 게시판의 전체 글을 가져오는 getBoardList() 메서드를 작성해주세요.
 	// 전체 글을 가져오므로 List<BoardVO> 를 리턴하면 됩니다.
 	// 작성시 UserDAO의 getAllUserList()메서드를 참조해주세요.
-	public List<BoardVO> getBoardList(){
+	public List<BoardVO> getBoardList(int pageNum){
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;//ResultSet은 실행쿼리문이 SELECT 구문인 경우 결과값을 받기 위해 필요합니다.
@@ -46,10 +46,14 @@ public class BoardDAO {
 		// 필요한 모든 변수가 선언되었다면 try블럭을 선언합니다.
 		try {
 			con = ds.getConnection();
+			//페이지 번호에 따른 시작 인덱스 번호는 자바변수로 먼저 구합니다.
+			int num = (pageNum - 1) *10;
 			// 쿼리문 저장
-			String sql = "SELECT * FROM boardTbl ORDER BY board_num DESC";
+			String sql = 
+					"SELECT * FROM boardtbl ORDER BY board_num DESC limit ?, 10;";
 			// PreparedStatement에 쿼리문 입력
 			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, num);
 			
 			rs = pstmt.executeQuery();
 			
@@ -93,7 +97,7 @@ public class BoardDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;//ResultSet은 실행쿼리문이 SELECT 구문인 경우 결과값을 받기 위해 필요합니다.
 		BoardVO board = new BoardVO();
-		
+		//upHit(boardNum); // getBoardDetail 내부에서 호출하도록 해도 조회수는 올라감
 		try {
 			con = ds.getConnection();
 			String sql = "SELECT * FROM boardtbl WHERE board_num=?";
@@ -213,6 +217,64 @@ public class BoardDAO {
 	}// 게시판 수정기능 끝
 	
 	
+	public void upHit(int bno) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			con = ds.getConnection();
+			String sql = "UPDATE boardTbl SET hit = hit + 1 WHERE board_num=?";
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setInt(1, bno);
+			
+			pstmt.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+				pstmt.close();
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}// 조회수 증가 로직 끝
+	
+	//전체 글 개수를 구해오는 메서드를 생성해주세요.
+	// 쿼리문 : SELECT COUNT(*) FROM boardTbl;
+	// 리턴자료형  : 정수
+	public int getBoardCount() {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;//ResultSet은 실행쿼리문이 SELECT 구문인 경우 결과값을 받기 위해 필요합니다.
+		int boardCount = 0;
+		try {
+			con = ds.getConnection();
+			String sql = "SELECT COUNT(*) FROM boardTbl";
+			
+			pstmt = con.prepareStatement(sql);
+
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				boardCount = rs.getInt(1);
+			}else {
+				System.out.println("계정이 없습니다.");
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+				pstmt.close();
+				rs.close();
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return boardCount;
+	}
 	
 }
 
